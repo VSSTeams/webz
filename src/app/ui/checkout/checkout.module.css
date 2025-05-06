@@ -1,0 +1,272 @@
+/* app/ui/checkout/checkout.module.css */
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.title {
+    text-align: center;
+    color: #343a40;
+    margin-bottom: 30px;
+}
+
+.breadcrumbContainer {
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.breadcrumb {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.home,
+.cart,
+.checkout,
+.category {
+    color: rgb(190, 54, 86);
+    font-weight: 600;
+}
+
+.home {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb a:hover {
+    color: #000;
+}
+
+.checkoutPage {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.checkoutContainer {
+    display: flex;
+    position: relative;
+}
+
+.orderDetails,
+.customerInfo {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.orderDetails {
+    margin-right: 20px;
+    order: 2;
+}
+
+.orderDetails h2,
+.customerInfo h2 {
+    color: #343a40;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 8px;
+}
+
+.orderItemList {
+    list-style: none;
+    padding: 0;
+}
+
+.orderItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.orderItem:last-child {
+    border-bottom: none;
+}
+
+.productName {
+    font-weight: bold;
+    color: #495057;
+    width: 75%;
+}
+
+.quantity {
+    color: #6c757d;
+    margin-left: 10px;
+}
+
+.price {
+    font-weight: bold;
+    color: #28a745;
+}
+
+.total {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+    color: #343a40;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #495057;
+}
+
+.formGroup input[type="text"],
+.formGroup input[type="email"],
+.formGroup textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1em;
+    color: #495057;
+    box-sizing: border-box;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.formGroup textarea {
+    min-height: 100px;
+}
+
+.placeOrderButton {
+    background-color: #28a745;
+    color: #fff;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+}
+
+.placeOrderButton:hover {
+    background-color: #1e7e34;
+}
+
+.loadingOverlay,
+.successAnimationOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.loadingContent {
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Màu nền trắng đục nổi bật */
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Hiệu ứng đổ bóng để nổi lên */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+.loadingText {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.successText {
+    margin-top: 10px;
+    font-size: 1.5rem;
+    color: #28a745;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .checkoutContainer {
+        flex-direction: column;
+    }
+
+    .orderDetails,
+    .customerInfo {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .orderDetails {
+        order: 1;
+    }
+
+    .customerInfo {
+        order: 2;
+    }
+}
+
+.paymentMethod{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.paymentMethod label{
+    margin-bottom: 0;
+}
+.momoLogo{
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+}
+#momo{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

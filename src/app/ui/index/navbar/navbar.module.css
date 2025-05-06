@@ -1,0 +1,103 @@
+.navbar {
+    background-color: #f8f8f8;
+    padding: 0px 20px;
+    border-bottom: 2px solid #eae8e8;
+    /* Border-bottom của navbar */
+    position: sticky;
+    top: 61px;
+    z-index: 1;
+    width: 100%;
+    min-height: auto;
+}
+
+.navList {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    min-height: 50px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-right: 20px;
+    min-height: 50px;
+}
+
+/* Thêm padding-bottom để tạo vùng đệm cho hover */
+.navLink {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 !important;
+    transition: color 0.5s;
+    display: block;
+    padding-bottom: 10px;
+    /* Tạo khoảng đệm dưới */
+}
+
+.navLink:hover {
+    color: #007bff;
+}
+
+/* Mở rộng vùng hover bao gồm dropdown */
+.navItem:hover>.dropdown {
+    display: block;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    /* Bắt đầu ngay dưới navbar */
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: 2px solid red;
+    /* Làm border-top trùng với border-bottom của navbar */
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    min-width: 150px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 991;
+    display: none;
+    /* Ẩn mặc định */
+}
+
+/* Đảm bảo dropdown vẫn hiển thị khi hover vào nó */
+.dropdown:hover {
+    display: block;
+}
+
+.dropdownItem {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    padding: 5px 15px;
+    display: block;
+}
+
+.dropdownItem:hover {
+    background-color: #e6e4e4;
+    color: #007bff;
+    transition: color 0.5s;
+}
+
+.loading {
+    padding: 10px 20px;
+    text-align: center;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .navList {
+        display: none;
+        /* Ẩn menu chính trên mobile */
+    }
+}

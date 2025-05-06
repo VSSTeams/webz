@@ -1,0 +1,22 @@
+.container{
+    display: flex;
+}
+.menu{
+    flex: 1;
+    background-color: var(--bgSoft);
+    padding: 20px;
+    max-height: 675px;
+    min-height: 675px;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0 0 20px;
+}
+.content{
+    flex: 6;
+    padding: 20px;
+}
+
+body{
+    color: white;
+    background-color: rgb(142, 139, 139);
+}

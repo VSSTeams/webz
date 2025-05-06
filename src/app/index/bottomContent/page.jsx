@@ -1,0 +1,316 @@
+// app/index/bottomContent/page.jsx
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import axios from "axios";
+import styles from '@/app/ui/index/bottomContent/bottomContent.module.css';
+
+export default function BottomContent({ products, categories, loading, updateCartInParent }) {
+    const [userId, setUserId] = useState(null);
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_API;
+    const [localCartItems, setLocalCartItems] = useState([]);
+    const [notification, setNotification] = useState({
+        message: '',
+        type: '', // 'success', 'error', etc.
+        isVisible: false,
+    });
+
+
+    useEffect(() => {
+        const storedId = localStorage.getItem("sessionId");
+        if (storedId) {
+            setUserId(storedId);
+            fetchCartItems(storedId);
+        }
+    }, []);
+
+    const productSlug = (name, id) => {
+        if (!name) return `/news/unknown-product-${id}.html`;
+        return (
+            "/p/" +
+            name
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, "") +
+            `-${id}.html`
+        );
+    };
+
+    const categorySlug = (name) => {
+        if (!name) return '/unknown-category';
+        return '/' + name
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+    };
+
+    const getProductsByCategory = (categoryId, limit = 4) => {
+        if (!categoryId || !products) return [];
+        const filteredProducts = products.filter(
+            (product) => product.id_category === categoryId
+        );
+        return filteredProducts
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(0, limit);
+    };
+
+    const categoriesWithProducts = categories.filter((category) => {
+        return products.some(product => product.id_category === category.id);
+    });
+
+    const formatPrice = (price) => {
+        if (price === null || price === undefined) return "N/A";
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    };
+
+    const fetchCartItems = async (userId) => {
+        try {
+            const cartResponse = await axios.get(`${apiUrl}/carts?user_id=${userId}`);
+            if (cartResponse.data.success && cartResponse.data.data.length > 0) {
+                const cartId = cartResponse.data.data[0].id;
+                const cartDetailsResponse = await axios.get(`${apiUrl}/carts_detail?cart_id=${cartId}`);
+                if (cartDetailsResponse.data.success) {
+                    const details = cartDetailsResponse.data.data.data;
+                    const productDetails = await Promise.all(
+                        details.map(async (item) => {
+                            const productResponse = await axios.get(`${apiUrl}/products/${item.product_id}`);
+                            return { ...item, product: productResponse.data.data };
+                        })
+                    );
+                    setLocalCartItems(productDetails);
+                    if (updateCartInParent) {
+                        updateCartInParent(productDetails); // Cập nhật state ở component cha
+                    }
+                } else {
+                    setLocalCartItems([]);
+                    if (updateCartInParent) {
+                        updateCartInParent([]);
+                    }
+                }
+            } else {
+                setLocalCartItems([]);
+                if (updateCartInParent) {
+                    updateCartInParent([]);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching cart items:", error);
+        }
+    };
+
+    const handleAddToCart = async (productId) => {
+        if (!userId) {
+            console.error("User ID not available.");
+            return;
+        }
+
+        try {
+            const existingCartResponse = await axios.get(`${apiUrl}/carts?user_id=${userId}`);
+            let cartId;
+            if (existingCartResponse.data.success && existingCartResponse.data.data.length > 0) {
+                cartId = existingCartResponse.data.data[0].id;
+            } else {
+                const newCartResponse = await axios.post(`${apiUrl}/carts`, { user_id: userId });
+                if (newCartResponse.data.success) {
+                    cartId = newCartResponse.data.data.id;
+                } else {
+                    console.error("Failed to create cart:", newCartResponse.data.message);
+                    setNotification({
+                        message: 'Lỗi khi tạo giỏ hàng!',
+                        type: 'error',
+                        isVisible: true,
+                    });
+                    setTimeout(() => {
+                        setNotification(prevState => ({ ...prevState, isVisible: false }));
+                    }, 3500);
+                    return;
+                }
+            }
+
+            const existingCartDetailResponse = await axios.get(`${apiUrl}/carts_detail?cart_id=${cartId}&product_id=${productId}`);
+            let success = false;
+            if (existingCartDetailResponse.data.success && existingCartDetailResponse.data.data.length > 0) {
+                const existingCartDetail = existingCartDetailResponse.data.data[0];
+                const updatedQuantity = existingCartDetail.quantity + 1;
+                const updateCartDetailResponse = await axios.put(`${apiUrl}/carts_detail/${existingCartDetail.id}`, {
+                    cart_id: existingCartDetail.cart_id,
+                    product_id: existingCartDetail.product_id,
+                    quantity: updatedQuantity,
+                });
+                if (updateCartDetailResponse.data.success) {
+                    success = true;
+                } else {
+                    console.error("Failed to update product quantity:", updateCartDetailResponse.data.message);
+                    setNotification({
+                        message: updateCartDetailResponse.data.message || 'Lỗi khi cập nhật giỏ hàng!',
+                        type: 'error',
+                        isVisible: true,
+                    });
+                    setTimeout(() => {
+                        setNotification(prevState => ({ ...prevState, isVisible: false }));
+                    }, 3500);
+                }
+            } else {
+                const cartDetailResponse = await axios.post(`${apiUrl}/carts_detail`, {
+                    cart_id: cartId,
+                    product_id: productId,
+                    quantity: 1
+                });
+                if (cartDetailResponse.data.success) {
+                    success = true;
+                } else {
+                    console.error("Failed to add product to cart detail:", cartDetailResponse.data.message);
+                    setNotification({
+                        message: cartDetailResponse.data.message || 'Lỗi khi thêm vào giỏ hàng!',
+                        type: 'error',
+                        isVisible: true,
+                    });
+                    setTimeout(() => {
+                        setNotification(prevState => ({ ...prevState, isVisible: false }));
+                    }, 3500);
+                }
+            }
+
+            if (success) {
+                // Gọi fetchCartItems để đồng bộ dữ liệu từ server
+                await fetchCartItems(userId);
+                setNotification({
+                    message: 'Thêm sản phẩm vào giỏ thành công!',
+                    type: 'success',
+                    isVisible: true,
+                });
+                setTimeout(() => {
+                    setNotification(prevState => ({ ...prevState, isVisible: false }));
+                }, 3500);
+            }
+        } catch (error) {
+            console.error("Error adding to cart:", error.response?.data || error.message);
+            setNotification({
+                message: 'Đã xảy ra lỗi khi thêm vào giỏ hàng!',
+                type: 'error',
+                isVisible: true,
+            });
+            setTimeout(() => {
+                setNotification(prevState => ({ ...prevState, isVisible: false }));
+            }, 3500);
+        }
+    };
+
+    const handleCloseNotification = () => {
+        setNotification(prevState => ({ ...prevState, isVisible: false }));
+    };
+
+    return (
+        <div className={styles.container}>
+            {notification.isVisible && (
+                <ul className={styles["notification-container"]}>
+                    <li className={`${styles["notification-item"]} ${styles[notification.type]}`}>
+                        <div className={styles["notification-content"]}>
+                            <div className={styles["notification-icon"]}>
+                                {notification.type === 'success' && (
+                                    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                                        ></path>
+                                    </svg>
+                                )}
+                                {notification.type === 'error' && (
+                                    <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m6 6 12 12M6 18 18 6"
+                                        />
+                                    </svg>
+                                )}
+                            </div>
+                            <div className={styles["notification-text"]}>{notification.message}</div>
+                            <div className={`${styles["notification-icon"]} ${styles["notification-close"]}`} onClick={handleCloseNotification}>
+                                <svg aria-hidden="true" fill="none" viewBox="0 0 24 24">
+                                    <path
+                                        stroke="currentColor"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M6 18 17.94 6M18 18 6.06 6"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div className={styles["notification-progress-bar"]}></div>
+                    </li>
+                </ul>
+            )}
+            {loading ? (
+                <div className={styles.loader}>Loading...</div>
+            ) : categoriesWithProducts.length > 0 ? (
+                categoriesWithProducts.map((category) => {
+                    const categoryProducts = getProductsByCategory(category.id, 4);
+                    if (categoryProducts.length === 0) {
+                        return null;
+                    }
+                    const catSlug = categorySlug(category.name);
+                    return (
+                        <div key={category.id} className={styles.categorySection}>
+                            <div className={styles.categoryHeader}>
+                                <div className={styles.categoryName}>
+                                    <Link href={catSlug} className={styles.linkCategory}>
+                                        <h3>{category.name || "Unnamed Category"}</h3>
+                                    </Link>
+                                </div>
+                                <div className={styles.readMore}>
+                                    <Link href={catSlug}>
+                                        <button>Xem thêm</button>
+                                    </Link>
+                                </div>
+                            </div>
+                            <div className={styles.productList}>
+                                {categoryProducts.map((product) => (
+                                    <article key={product.id} className={styles.productItem}>
+                                        <div className={styles.image}>
+                                            <Link
+                                                href={productSlug(product.name, product.id)}
+                                                className={styles.linkImage}
+                                            >
+                                                <img
+                                                    src={product.image || "/images/placeholder.png"}
+                                                    alt={product.name || "Product Image"}
+                                                />
+                                            </Link>
+                                        </div>
+                                        <div className={styles.text}>
+                                            <h5 className={styles.title}>
+                                                <Link href={productSlug(product.name, product.id)}>
+                                                    {product.name || "No name available"}
+                                                </Link>
+                                            </h5>
+                                            <div className={styles.price}>
+                                                {formatPrice(product.price)}
+                                            </div>
+                                            <div className={styles.addToCart}>
+                                                <button onClick={() => handleAddToCart(product.id)}>Thêm vào giỏ hàng</button>
+                                            </div>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })
+            ) : (
+                <p>Không có danh mục nào có sản phẩm để hiển thị.</p>
+            )}
+        </div>
+    );
+}

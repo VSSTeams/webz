@@ -1,0 +1,345 @@
+/* /app/ui/search/search.module.css */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    height: auto;
+}
+
+.categoryTitle {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.articleContentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    color: #777;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+}
+
+.home,
+.category {
+    text-decoration: none;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.navigate {
+    margin: 0 8px;
+    font-size: 1.2rem;
+    color: #777;
+}
+
+.productList {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* Hiển thị 4 sản phẩm mỗi dòng */
+    gap: 20px;
+}
+
+.productItem {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-color: #fff;
+}
+
+.productItem:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    /* Fixed height for consistency */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Hide any image overflow */
+}
+
+.linkImage {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.linkImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensure the image covers the container without distortion */
+    display: block;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.linkImage img:hover {
+    opacity: 0.9;
+}
+
+.text {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 16px;
+    /* Slightly smaller title */
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.title a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    /* Make the entire title clickable */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* Prevent title from wrapping to multiple lines if too long */
+}
+
+.title a:hover {
+    color: #007bff;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: 500;
+    color: #28a745;
+    /* A common color for prices */
+}
+
+.loader {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 20px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 992px) {
+    .productList {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        /* Vẫn giữ auto-fit cho màn hình lớn hơn một chút */
+    }
+
+    .image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .productList {
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+        /* Chuyển sang 2 cột trên màn hình nhỏ hơn */
+    }
+
+    .image {
+        height: 150px;
+    }
+
+    .text {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .title {
+        font-size: 14px;
+    }
+
+    .price {
+        font-size: 14px;
+    }
+}
+
+
+.addToCart {
+    text-align: center;
+    background-color: #806c59;
+    border-radius: 5px;
+    margin-top: 10px;
+    /* Thêm margin phía trên nút */
+}
+
+.addToCart button {
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    border: none;
+    font-size: 14px;
+    /* Điều chỉnh kích thước font cho phù hợp */
+}
+
+.home {
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgb(190, 54, 86);
+    border-radius: 50%;
+}
+
+.breadcrumb a:hover {
+    color: black;
+}
+
+.category {
+    color: rgb(190, 54, 86);
+    font-weight: 600;
+}
+
+/* bottomContent.module.css (hoặc notification.module.css) */
+.notification-container {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    z-index: 1000;
+    /* Đảm bảo nó hiển thị trên các phần tử khác */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: slideIn 0.3s ease-out forwards, fadeOut 0.3s 3s ease-in forwards;
+    /* Hiệu ứng xuất hiện và biến mất */
+}
+
+.notification-item.success {
+    border-color: #d4edda;
+    background-color: #f0fff0;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+}
+
+.notification-icon {
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.notification-icon.success svg path {
+    stroke: #28a745;
+}
+
+.notification-icon.notification-close {
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.notification-icon.notification-close svg path {
+    stroke: #6c757d;
+}
+
+.notification-text {
+    flex-grow: 1;
+}
+
+.notification-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: #28a745;
+    width: 100%;
+    transform-origin: left;
+    animation: progressBar 3s linear forwards;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes progressBar {
+    to {
+        width: 0%;
+    }
+}
+
+/* app/ui/search/search.module.css */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.paginationButton {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.paginationButton:hover {
+    background-color: #f0f0f0;
+}
+
+.active {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}

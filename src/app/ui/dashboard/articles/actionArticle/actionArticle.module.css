@@ -1,0 +1,148 @@
+.container {
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    height: 570px;
+    position: relative;
+    overflow: hidden;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.form input {
+    padding: 20px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: rgb(253, 253, 253);
+    width: 35%;
+    margin-bottom: 30px;
+    height: 70px;
+    border: 2px solid #7f838d;
+}
+
+.form button {
+    width: 100%;
+    cursor: pointer;
+    background-color: transparent;
+    border: 2px solid #7f838d;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 22px;
+}
+
+.form textarea {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--text);
+    width: 30%;
+    border: 2px solid #7f838d;
+    resize: vertical;
+    height: 200px;
+}
+
+.form button:hover {
+    background-color: #6a6b6e;
+    color: white;
+}
+
+.role {
+    border: 2px solid #7f838d;
+    max-height: 200px;
+    /* Giới hạn chiều cao tối đa */
+    overflow-y: auto;
+    /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
+    width: 20%;
+    border-radius: 5px;
+    /* Đảm bảo chiều rộng phù hợp */
+    scrollbar-color: #76787c transparent;
+    /* Màu thanh cuộn */
+    scrollbar-width: thin;
+    /* Độ rộng thanh cuộn */
+    padding: 10px;
+    /* Thêm padding để nội dung không dính sát viền */
+    scroll-behavior: smooth;
+    /* Cuộn mượt mà */
+    background-color: var(--bg);
+    /* Màu nền phù hợp với theme */
+}
+
+.role label {
+    padding: 10px 20px;
+    display: block;
+    margin-bottom: 10px;
+    /* Khoảng cách giữa các label */
+    border-radius: 5px;
+    /* Bo góc */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* Hiệu ứng khi hover */
+    border: 1px solid transparent;
+    cursor: pointer;
+    /* Thêm viền mặc định */
+}
+
+.role label:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #7f838d;
+}
+
+.role label.selected {
+    border-color: #7f838d;
+    /* Viền khi được chọn */
+    background-color: rgba(183, 184, 187, 0.1);
+    /* Màu nền khi được chọn */
+}
+
+.role .categoryContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    /* Khoảng cách giữa icon và text */
+}
+
+.role .categoryContent svg {
+    font-size: 20px;
+    /* Kích thước icon */
+}
+
+.title {
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+    background-color: var(--bgSoft);
+}
+
+.imageUpdate {
+    gap: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 60%;
+    border: 2px solid #7f838d;
+    padding: 10px 35px;
+    border-radius: 5px;
+}
+
+.imageUpdate input {
+    width: 60%;
+    margin: 0;
+}
+
+.currentImage {
+    padding: 5px;
+    gap: 20px;
+}
+
+.currentImage img {
+    width: 120px;
+    height: auto;
+    margin: 5px;
+}

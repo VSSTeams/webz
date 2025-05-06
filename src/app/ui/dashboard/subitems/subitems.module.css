@@ -1,0 +1,156 @@
+.container {
+    background-color: var(--bgSoft);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    position: relative;
+    height: 570px;
+    scroll-snap-type: y mandatory;
+    scrollbar-color: #76787c transparent;
+    overflow: auto;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background-color: var(--bgSoft);
+    z-index: 1;
+    padding: 10px 0;
+}
+
+.addButton {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #a6a6a7;
+    color: black;
+    cursor: pointer;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.table td {
+    padding: 10px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+}
+
+.edit {
+    background-color: rgb(165, 165, 18);
+}
+
+.edit>svg,
+.delete>svg {
+    font-size: 20px;
+}
+
+.delete {
+    background-color: red;
+}
+
+.addButton:hover {
+    background-color: #111111;
+    color: white;
+}
+
+.table tbody tr {
+    border-top: 2px solid #57595e;
+}
+
+.loader,
+.loader::before,
+.loader::after {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    animation: rotate 5s linear infinite;
+}
+
+.loader {
+    padding: 20px;
+    margin: 10px;
+    font-size: 22px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-color: #5a4ff3;
+}
+
+.loader::before,
+.loader::after {
+    position: absolute;
+    content: "";
+}
+
+.loader::before {
+    border-color: #35a2d2;
+    width: 110%;
+    height: 110%;
+    animation-delay: .5s
+}
+
+.loader::after {
+    border-color: #9c40fc;
+    width: 120%;
+    height: 120%;
+    animation-delay: .10s;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.table {
+    overflow: scroll;
+    height: 100px;
+}
+
+.table thead {
+    position: sticky;
+    top: 60px;
+    /* Điều chỉnh giá trị này để phù hợp với chiều cao của phần top */
+    background-color: var(--bgSoft);
+    z-index: 1;
+}
+
+.noResults {
+    padding: 20px;
+    margin: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

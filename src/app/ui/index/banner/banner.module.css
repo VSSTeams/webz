@@ -1,0 +1,47 @@
+/* ./bannerPage.module.css */
+.bannerContainer {
+    width: 100%;
+    overflow: hidden;
+    /* Hide images that are not currently visible */
+    position: relative;
+    /* For positioning indicators if needed */
+}
+
+.bannerImage {
+    display: block;
+    /* Prevent extra space below the image */
+    width: 100%;
+    /* Make the image responsive */
+    height: auto;
+    /* Maintain aspect ratio */
+    transition: opacity 0.5s ease-in-out;
+    /* Optional: Add a fade effect */
+}
+
+/* Optional: Styling for slide indicators */
+.indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.indicators button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0;
+    /* Hide button text */
+}
+
+.indicators button.active {
+    background-color: white;
+    color: black;
+}

@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #1f1f22;
+    border: 2px solid #5d5d61;
+}
+.input{
+    background-color: transparent;
+    border: none;
+    color: white;
+}

@@ -1,0 +1,343 @@
+.header {
+    background-color: #f8f8f8;
+    border-bottom: 2px solid #eae8e8;
+    padding: 10px 0;
+    z-index: 1000;
+    top: 0;
+    position: sticky;
+    width: 100%;
+    min-height: auto;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Bên trái: Logo và ngày giờ */
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hamburger {
+    display: none;
+    /* Ẩn trên desktop */
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.info {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Thanh tìm kiếm ở giữa (desktop) */
+.searchBar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+    max-width: 400px;
+    margin: 0 20px;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 8px 40px 8px 15px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+}
+
+.searchInput:focus {
+    border-color: #007bff;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 15px;
+    color: #666;
+    font-size: 16px;
+}
+
+/* Bên phải: Đăng nhập và thông báo */
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Biểu tượng tìm kiếm trên mobile */
+.searchIconMobile {
+    display: none;
+    /* Ẩn trên desktop */
+    position: relative;
+}
+
+.searchBarMobile {
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    width: 200px;
+    background-color: transparent;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.searchInputMobile {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: black;
+    background-color: white;
+    padding: 8px 40px 8px 15px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+}
+
+.userContainer {
+    position: relative;
+}
+
+.userWrapper {
+    position: relative;
+}
+
+.icon {
+    color: #666;
+    font-size: 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon:hover {
+    color: #007bff;
+}
+
+/* Style cho chữ cái đầu của name */
+.userInitial {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+    border: 1px solid #005bb5;
+}
+
+.userInitial:hover {
+    background-color: #005bb5;
+}
+
+/* Dropdown menu */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: -50px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    list-style: none;
+    padding: 5px 0;
+    margin: 10px 0;
+    min-width: 120px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+.dropdown.open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdownItem {
+    display: block;
+    padding: 8px 15px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background-color: #f0f0f0;
+}
+
+/* Sidebar trên mobile */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 10002;
+    overflow-y: auto;
+    /* Cho phép cuộn nếu nội dung dài */
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebarLogo {
+    height: 30px;
+}
+
+.closeIcon {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.sidebarList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebarRow {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.sidebarColumn {
+    flex: 1;
+    padding: 10px;
+}
+
+.sidebarLink {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #b43c6e;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sidebarLink:hover {
+    background-color: #f0f0f0;
+}
+
+.sidebarSubList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f9f9f9;
+}
+
+.sidebarSubLink {
+    display: block;
+    padding: 5px 20px;
+    text-decoration: none;
+    color: #181717;
+    font-size: 14px;
+}
+
+.sidebarSubLink:hover {
+    background-color: #e0e0e0;
+}
+
+/* Overlay khi sidebar mở */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10001;
+}
+
+/* Media query cho mobile */
+@media (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .leftSection {
+        flex: 1;
+    }
+
+    .hamburger {
+        display: block;
+        /* Hiển thị hamburger trên mobile */
+    }
+
+    .searchBar {
+        display: none;
+        /* Ẩn thanh tìm kiếm trên mobile */
+    }
+
+    .searchIconMobile {
+        display: block;
+        /* Hiển thị biểu tượng tìm kiếm trên mobile */
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 10001;
+    }
+
+    .leftSection .info {
+        display: none;
+    }
+
+    .rightSection {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .icons {
+        gap: 10px;
+    }
+}

@@ -1,0 +1,313 @@
+/* app/ui/orders/orders.module.css */
+.container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 80vh;
+    background-color: #fff;
+}
+
+.pageTitle {
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+
+/* Breadcrumb */
+.breadcrumbContainer {
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #dee2e6;
+    /* Đường kẻ phân cách */
+}
+
+
+.home {
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: rgb(190, 54, 86);
+    border-radius: 50%;
+}
+
+.breadcrumb a:hover {
+    color: black;
+}
+
+.category {
+    color: rgb(190, 54, 86);
+    font-weight: 600;
+}
+
+.breadcrumb {
+    width: auto;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.author {
+    text-align: right;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.navigate {
+    color: #666;
+}
+
+/* Danh sách đơn hàng */
+.ordersList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.orderItem {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fafafa;
+    transition: box-shadow 0.3s ease;
+}
+
+.orderItem:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.orderHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.orderInfo p {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #555;
+}
+
+.orderInfo strong {
+    color: #222;
+}
+
+.viewDetailsButton {
+    padding: 8px 16px;
+    background-color: #d81b60;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.viewDetailsButton:hover {
+    background-color: #ad1457;
+    transform: translateY(-2px);
+}
+
+/* Modal chi tiết đơn hàng */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modalTitle {
+    font-size: 24px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.orderDetailsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.orderDetailItem {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.productImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.detailInfo p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.detailInfo strong {
+    color: #222;
+}
+
+.totalPrice {
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+    margin-top: 20px;
+    text-align: right;
+}
+
+.closeModalButton {
+    display: block;
+    padding: 4px 8px;
+    background-color: #666;
+    color: #fff;
+    border: none;
+    border-top-right-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.closeModalButton:hover {
+    background-color: #555;
+}
+
+/* Loader */
+.loader,
+.loader::before,
+.loader::after {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    animation: rotate 1.5s linear infinite;
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-color: #d81b60;
+}
+
+.loader::before,
+.loader::after {
+    content: "";
+    position: absolute;
+}
+
+.loader::before {
+    border-color: #f06292;
+    width: 48px;
+    height: 48px;
+    animation-delay: 0.2s;
+}
+
+.loader::after {
+    border-color: #ad1457;
+    width: 56px;
+    height: 56px;
+    animation-delay: 0.4s;
+}
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Thông báo lỗi hoặc không có đơn hàng */
+.error,
+.noOrders {
+    text-align: center;
+    font-size: 16px;
+    color: #dc3545;
+    margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .pageTitle {
+        font-size: 24px;
+    }
+
+    .orderHeader {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modalContent {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .modalTitle {
+        font-size: 20px;
+    }
+
+    .productImage {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .orderInfo p {
+        font-size: 14px;
+    }
+
+    .viewDetailsButton {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .closeModalButton {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+}
